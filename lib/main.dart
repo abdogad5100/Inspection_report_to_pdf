@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inspection_report_project/ui/home/overAll_result_section.dart';
+import 'package:inspection_report_project/ui/home/report_page_form.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +12,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: OverallResultSection(),
+      initialRoute: ReportFormPage.routeName,
+      routes: {
+        ReportFormPage.routeName: (context) => const ReportFormPage(),
+
+      },
     );
   }
 }
