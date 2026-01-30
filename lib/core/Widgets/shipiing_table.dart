@@ -68,7 +68,7 @@ class _ShippingTableState extends State<ShippingTable> {
         children: [
           Text(
             widget.tableTitle,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
 
@@ -84,7 +84,8 @@ class _ShippingTableState extends State<ShippingTable> {
                     padding: EdgeInsets.all(12),
                     child: Text(
                       "Date",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 24),
                     ),
                   ),
                 ),
@@ -93,7 +94,8 @@ class _ShippingTableState extends State<ShippingTable> {
                     padding: EdgeInsets.all(12),
                     child: Text(
                       "P.O",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 24),
                     ),
                   ),
                 ),
@@ -102,7 +104,8 @@ class _ShippingTableState extends State<ShippingTable> {
                     padding: EdgeInsets.all(12),
                     child: Text(
                       "Units",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 24),
                     ),
                   ),
                 ),
@@ -218,7 +221,7 @@ class _ShippingTableState extends State<ShippingTable> {
               children: [
                 const Text(
                   "Total Units:",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   totalUnits.toString(),
