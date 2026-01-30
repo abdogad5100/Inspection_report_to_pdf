@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -50,7 +51,8 @@ Widget cellInput(
 }
 
 /// ===== MULTILINE INPUT (Description) =====
-Widget cellMultilineInput(TextEditingController controller) return Padding(
+Widget cellMultilineInput(TextEditingController controller) {
+  return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 4),
     child: TextField(
       controller: controller,

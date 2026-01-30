@@ -6,7 +6,9 @@ import 'package:inspection_report_project/ui/Screens/workmanship_defectList.dart
 import 'package:provider/provider.dart';
 
 import 'core/Providers/reportData.dart';
+import 'core/Providers/report_defect_table.dart';
 import 'core/Providers/report_overall_result.dart';
+import 'core/Providers/worksman_ship_defect.dart';
 
 void main() {
   runApp(
@@ -14,6 +16,8 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => ReportData()),
         ChangeNotifierProvider(create: (_) => ReportOverallResult()),
+        ChangeNotifierProvider(create: (_) => ReportDefectTable()),
+        ChangeNotifierProvider(create: (_) => WorksmanShipDefect()),
       ],
       child: const MyApp(),
     ),
