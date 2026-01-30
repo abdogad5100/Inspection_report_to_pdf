@@ -1,67 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ResultOptionWidget extends StatefulWidget {
-  final String label; // النص اللي هيظهر
+import '../Providers/report_overall_result.dart';
+
+class ResultOptionWidget extends StatelessWidget {
+  final String label;
   const ResultOptionWidget({super.key, required this.label});
 
   @override
-  State<ResultOptionWidget> createState() => _ResultOptionWidgetState();
-}
-
-class _ResultOptionWidgetState extends State<ResultOptionWidget> {
-  bool? selectedValue; // true = PASS, false = FAIL
-
-  @override
   Widget build(BuildContext context) {
+    final report = context.watch<ReportOverallResult>();
+    bool? selectedValue = report.getResult(label);
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(
-            widget.label,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-
+          Text(label, style: const TextStyle(
+              fontSize: 28, fontWeight: FontWeight.bold)),
           Row(
             children: [
               Radio<bool>(
                 value: true,
                 groupValue: selectedValue,
                 onChanged: (value) {
-                  setState(() {
-                    selectedValue = value;
-                  });
+                  if (value != null) report.setResult(label, value);
                 },
               ),
-              const Text(
-                "PASS",
-                style: TextStyle(
+              const Text("PASS", style: TextStyle(fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.green,
-                ),
-              ),
+                  color: Colors.green)),
             ],
           ),
-
           Row(
             children: [
               Radio<bool>(
                 value: false,
                 groupValue: selectedValue,
                 onChanged: (value) {
-                  setState(() {
-                    selectedValue = value;
-                  });
+                  if (value != null) report.setResult(label, value);
                 },
               ),
-              const Text(
-                "FAIL",
-                style: TextStyle(
+              const Text("FAIL", style: TextStyle(fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.red,
-                ),
-              ),
+                  color: Colors.red)),
             ],
           ),
         ],
