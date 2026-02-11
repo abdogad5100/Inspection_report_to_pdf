@@ -31,6 +31,10 @@ class ReportOverallResult extends ChangeNotifier {
 
   Map<String, bool?> overallResults = {};
 
+  String getPackingResult(String key) {
+    return packingResults[key] ?? 'NA';
+  }
+
   void setResult(String key, bool value) {
     overallResults[key] = value;
     notifyListeners();
@@ -38,6 +42,7 @@ class ReportOverallResult extends ChangeNotifier {
 
   bool? getResult(String key) => overallResults[key];
 
+  @override
   void dispose() {
     samplePull.dispose();
     major.dispose();

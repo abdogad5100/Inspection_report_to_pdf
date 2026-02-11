@@ -15,7 +15,8 @@ class DefectsTableScreen extends StatelessWidget {
     final provider = context.watch<ReportDefectTable>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Defects Table")),
+      appBar: AppBar(
+        title: const Text("Defects Table"), automaticallyImplyLeading: false,),
 
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -15,8 +15,42 @@ class ReportFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          SizedBox(
+            width: 180,
+            child: TextField(
+              controller: context.read<ReportData>().reportPeriod,
+              decoration: const InputDecoration(
+                hintText: 'Rep Period',
+                border: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 8),
+              ),
+              style: const TextStyle(color: Colors.black),
+            ),
+          ),
+          const SizedBox(width: 12),
+          SizedBox(
+            width: 120,
+            child: TextField(
+              controller: context.read<ReportData>().reportCode,
+              decoration: const InputDecoration(
+                hintText: 'Report Code',
+                border: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black, width: 1),
+                ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 8),
+              ),
+              style: const TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
+      ),
+
       floatingActionButton: Align(
-        alignment: AlignmentGeometry.centerRight,
+        alignment: AlignmentGeometry.bottomRight,
         child: FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, OverallResultSection.routeName);
@@ -114,11 +148,7 @@ class ReportFormPage extends StatelessWidget {
                   const SizedBox(height: 50),
 
                   // ===== Shipping Table =====
-                  ShippingTable(
-                    tableTitle: "Cut / POs Details",
-                    rows: reportData.shippingRows,
-                    onRowsChanged: reportData.updateShippingRows,
-                  ),
+                  ShippingTable(tableTitle: "Cut / POs Details"),
 
                   const SizedBox(height: 50),
 
