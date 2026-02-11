@@ -1,61 +1,20 @@
 // widgets/shipping_table.dart
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../ui/model/shipping_model.dart';
+import '../Providers/reportData.dart';
 
-class ShippingTable extends StatefulWidget {
+class ShippingTable extends StatelessWidget {
   final String tableTitle;
-  final List<ShippingRow> rows;
-  final Function(List<ShippingRow>) onRowsChanged;
 
-  const ShippingTable({
-    Key? key,
-    required this.tableTitle,
-    required this.rows,
-    required this.onRowsChanged,
-  }) : super(key: key);
-
-  @override
-  _ShippingTableState createState() => _ShippingTableState();
-}
-
-class _ShippingTableState extends State<ShippingTable> {
-  List<ShippingRow> get rows => widget.rows;
-
-  void updateRow(int index, ShippingRow newRow) {
-    setState(() {
-      rows[index] = newRow;
-      widget.onRowsChanged(rows);
-    });
-  }
-
-  void addRow() {
-    setState(() {
-      rows.add(ShippingRow(date: '', po: '', units: ''));
-      widget.onRowsChanged(rows);
-    });
-  }
-
-  void removeRow(int index) {
-    setState(() {
-      if (rows.length > 1) {
-        rows.removeAt(index);
-        widget.onRowsChanged(rows);
-      }
-    });
-  }
-
-  int get totalUnits {
-    int total = 0;
-    for (var row in rows) {
-      total += int.tryParse(row.units) ?? 0;
-    }
-    return total;
-  }
+  const ShippingTable({Key? key, required this.tableTitle}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final reportData = context.watch<ReportData>();
+    final rows = reportData.shippingRows;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -67,11 +26,12 @@ class _ShippingTableState extends State<ShippingTable> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.tableTitle,
+            tableTitle,
             style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
 
+          /// ===== HEADER =====
           Container(
             decoration: BoxDecoration(
               color: Colors.grey[200],
@@ -83,19 +43,11 @@ class _ShippingTableState extends State<ShippingTable> {
                   child: Padding(
                     padding: EdgeInsets.all(12),
                     child: Text(
-                      "Date",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 24),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(12),
-                    child: Text(
                       "P.O",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 24),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
                     ),
                   ),
                 ),
@@ -105,7 +57,21 @@ class _ShippingTableState extends State<ShippingTable> {
                     child: Text(
                       "Units",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 24),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(12),
+                    child: Text(
+                      "Date",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
                     ),
                   ),
                 ),
@@ -116,82 +82,77 @@ class _ShippingTableState extends State<ShippingTable> {
 
           const SizedBox(height: 8),
 
+          /// ===== ROWS =====
           Column(
             children: List.generate(rows.length, (index) {
+              final row = rows[index];
+
               return Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Row(
                   children: [
+
+
                     Expanded(
                       child: TextFormField(
+                        initialValue: row.po,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           contentPadding: EdgeInsets.all(12),
                         ),
-                        initialValue: rows[index].date,
                         onChanged: (value) {
-                          updateRow(
+                          reportData.updateShippingRow(
                             index,
-                            ShippingRow(
-                              date: value,
-                              po: rows[index].po,
-                              units: rows[index].units,
-                            ),
+                            row.copyWith(po: value),
                           );
                         },
                       ),
                     ),
+
                     const SizedBox(width: 8),
+
 
                     Expanded(
                       child: TextFormField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.all(12),
-                        ),
-                        initialValue: rows[index].po,
-                        onChanged: (value) {
-                          updateRow(
-                            index,
-                            ShippingRow(
-                              date: rows[index].date,
-                              po: value,
-                              units: rows[index].units,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-
-                    Expanded(
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.all(12),
-                        ),
-                        initialValue: rows[index].units,
+                        initialValue: row.units.toString(),
                         keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.all(12),
+                        ),
                         onChanged: (value) {
-                          updateRow(
+                          reportData.updateShippingRow(
                             index,
-                            ShippingRow(
-                              date: rows[index].date,
-                              po: rows[index].po,
-                              units: value,
+                            row.copyWith(
+                              units: int.tryParse(value) ?? 0,
                             ),
                           );
                         },
                       ),
                     ),
+
                     const SizedBox(width: 8),
+                    Expanded(
+                      child: TextFormField(
+                        initialValue: row.date,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.all(12),
+                        ),
+                        onChanged: (value) {
+                          reportData.updateShippingRow(
+                            index,
+                            row.copyWith(date: value),
+                          );
+                        },
+                      ),
+                    ),
 
                     SizedBox(
                       width: 50,
                       child: IconButton(
-                        onPressed: () => removeRow(index),
+                        onPressed: () => reportData.deleteShippingRow(index),
                         icon: const Icon(Icons.delete, color: Colors.red),
-                        tooltip: 'Delete row',
                       ),
                     ),
                   ],
@@ -202,14 +163,16 @@ class _ShippingTableState extends State<ShippingTable> {
 
           const SizedBox(height: 16),
 
+          /// ===== ADD ROW =====
           ElevatedButton.icon(
-            onPressed: addRow,
+            onPressed: reportData.addShippingRow,
             icon: const Icon(Icons.add),
             label: const Text('Add Row'),
           ),
 
           const SizedBox(height: 16),
 
+          /// ===== TOTAL =====
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -224,9 +187,9 @@ class _ShippingTableState extends State<ShippingTable> {
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  totalUnits.toString(),
+                  reportData.totalUnits.toString(),
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.blue,
                   ),

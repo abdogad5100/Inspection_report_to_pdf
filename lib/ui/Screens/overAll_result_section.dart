@@ -134,6 +134,7 @@ class _OverallResultSectionState extends State<OverallResultSection> {
                       const ResultOptionWidget(label: "MEASUREMENT"),
                       const SizedBox(height: 10),
 
+
                       BuildField(
                         label: "Sample Pull:",
                         controller: report.measurementSamplePull,
@@ -173,17 +174,18 @@ class _OverallResultSectionState extends State<OverallResultSection> {
 
                 YesNoNaSelector(
                   label: "1. Garments testing completed",
-                  value: report.packingResults["Garments testing completed"],
+                  value: report.packingResults["1.Garments testing completed"],
                   onChanged: (v) =>
-                      report.setPackingResult("Garments testing completed", v),
+                      report.setPackingResult(
+                          "1.Garments testing completed", v),
                 ),
 
                 YesNoNaSelector(
                   label: "2. Technical Spec & Approval Sample",
                   value:
-                      report.packingResults["Technical Spec & Approval Sample"],
+                  report.packingResults["2.Technical Spec & Approval Sample"],
                   onChanged: (v) => report.setPackingResult(
-                    "Technical Spec & Approval Sample",
+                    "2.Technical Spec & Approval Sample",
                     v,
                   ),
                 ),
@@ -191,35 +193,37 @@ class _OverallResultSectionState extends State<OverallResultSection> {
                 YesNoNaSelector(
                   label: "3. Shipping Mark & Carton Sticker",
                   value:
-                      report.packingResults["Shipping Mark & Carton Sticker"],
+                  report.packingResults["3.Shipping Mark & Carton Sticker"],
                   onChanged: (v) => report.setPackingResult(
-                    "Shipping Mark & Carton Sticker",
+                    "3.Shipping Mark & Carton Sticker",
                     v,
                   ),
                 ),
 
                 YesNoNaSelector(
                   label: "4. Polybag and Assortment units",
-                  value: report.packingResults["Polybag and Assortment units"],
+                  value: report
+                      .packingResults["4.Polybag and Assortment units"],
                   onChanged: (v) => report.setPackingResult(
-                    "Polybag and Assortment units",
+                    "4.Polybag and Assortment units",
                     v,
                   ),
                 ),
 
                 YesNoNaSelector(
                   label: "5. Hangtags and Price Tickets",
-                  value: report.packingResults["Hangtags and Price Tickets"],
+                  value: report.packingResults["5.Hangtags and Price Tickets"],
                   onChanged: (v) =>
-                      report.setPackingResult("Hangtags and Price Tickets", v),
+                      report.setPackingResult(
+                          "5.Hangtags and Price Tickets", v),
                 ),
 
                 YesNoNaSelector(
                   label: "6. Main Label placement & content",
                   value:
-                      report.packingResults["Main Label placement & content"],
+                  report.packingResults["6.Main Label placement & content"],
                   onChanged: (v) => report.setPackingResult(
-                    "Main Label placement & content",
+                    "6.Main Label placement & content",
                     v,
                   ),
                 ),
@@ -227,18 +231,18 @@ class _OverallResultSectionState extends State<OverallResultSection> {
                 YesNoNaSelector(
                   label: "7. Care Label placement & content",
                   value:
-                      report.packingResults["Care Label placement & content"],
+                  report.packingResults["7.Care Label placement & content"],
                   onChanged: (v) => report.setPackingResult(
-                    "Care Label placement & content",
+                    "7.Care Label placement & content",
                     v,
                   ),
                 ),
 
                 YesNoNaSelector(
                   label: "8. Hanger & Size Cap",
-                  value: report.packingResults["Hanger & Size Cap"],
+                  value: report.packingResults["8.Hanger & Size Cap"],
                   onChanged: (v) =>
-                      report.setPackingResult("Hanger & Size Cap", v),
+                      report.setPackingResult("8.Hanger & Size Cap", v),
                 ),
 
                 BuildField(

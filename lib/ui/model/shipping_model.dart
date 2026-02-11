@@ -1,9 +1,16 @@
-// models/shipping_row.dart
 
 class ShippingRow {
-  String date;
   String po;
-  String units;
+  int units;
+  String date;
 
-  ShippingRow({required this.date, required this.po, required this.units});
+  ShippingRow({required this.po, required this.units, required this.date});
+
+  ShippingRow copyWith({String? po, int? units, String? date}) {
+    return ShippingRow(
+      po: po ?? this.po,
+      units: units ?? this.units,
+      date: date ?? this.date,
+    );
+  }
 }
